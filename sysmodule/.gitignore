@@ -1,0 +1,11 @@
+/build/
+/recurciv_sysmodule.elf
+/recurciv_sysmodule.map
+/recurciv_sysmodule.nso
+/recurciv_sysmodule.npdm
+/recurciv_sysmodule.nsp
+/recurciv_sysmodule_atmosphere.zip
+/recurciv_sysmodule_atmosphere_updated.zip
+/recurciv_sysmodule_atmosphere_0100000000006001.zip
+/atmosphere/contents/4200000000006001/exefs.nsp
+/recurciv_sysmodule_atmosphere_4200000000006001.zip

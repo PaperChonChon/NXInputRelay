@@ -1,0 +1,4 @@
+# RecurCIV macro: single A press to trigger wired connection test
+# Run this after wired_connection_macro.txt has parked on the Test Connection page
+click a
+delay 0.1

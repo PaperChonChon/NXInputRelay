@@ -1,0 +1,60 @@
+# Credentials and local configuration
+network-token.txt
+**/network-token.txt
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# Runtime output
+*.log
+*.log.[0-9]*
+settings.txt
+crash_reports/
+fatal_errors/
+
+# Build and release output
+**/build/
+**/release/
+**/release-ready/
+*.o
+*.obj
+*.exe
+*.elf
+*.nro
+*.nacp
+*.map
+*.nso
+*.nsp
+*.zip
+*.7z
+*.pdb
+*.ilk
+*.pyc
+__pycache__/
+node_modules/
+
+# Generated previews and temporary files
+*.ppm
+*.bak
+*.backup
+*.tmp
+*.temp
+*.orig
+*.rej
+*~
+
+# Local tools and editor state
+.vs/
+.vscode/
+.idea/
+.venv/
+venv/
+.DS_Store
+Thumbs.db
+
+# The zero-byte boot flag is source-controlled intentionally.
+!sysmodule/atmosphere/contents/4200000000006001/flags/boot2.flag
