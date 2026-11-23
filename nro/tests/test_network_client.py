@@ -34,6 +34,15 @@ module = importlib.util.module_from_spec(spec)
 assert spec.loader is not None
 spec.loader.exec_module(module)
 assert module.DEFAULT_TOKEN_FILE == client.with_name("network-token.txt")
+assert module.SWITCH_TOKEN_PATH == "/switch/NXInputRelay/network-token.txt"
+
+for runtime_source in (
+    root / "source" / "network_input.c",
+    root.parent / "sysmodule" / "source" / "network_input.c",
+):
+    runtime_text = runtime_source.read_text(encoding="utf-8")
+    assert '#define NETWORK_TOKEN_PATH "sdmc:/switch/NXInputRelay/network-token.txt"' in runtime_text
+    assert '#define NETWORK_TOKEN_LEGACY_PATH "sdmc:/switch/RecurCIV/network-token.txt"' in runtime_text
 
 with tempfile.TemporaryDirectory(prefix="nxinputrelay-token-") as directory:
     token_file = Path(directory) / "network-token.txt"
@@ -48,7 +57,7 @@ with tempfile.TemporaryDirectory(prefix="nxinputrelay-token-") as directory:
     token = token_file.read_text(encoding="ascii").strip()
     assert 8 <= len(token) <= 64
     assert token.isascii() and token.isprintable() and not any(character.isspace() for character in token)
-    assert "/switch/RecurCIV/network-token.txt" in generated.stdout
+    assert "/switch/NXInputRelay/network-token.txt" in generated.stdout
     assert token not in generated.stdout
     try:
         module.generate_token_file(token_file)

@@ -72,7 +72,7 @@ ViewFooter view_footer(const View *v) {
         if(v->network.session_active || v->network.cleanup_active) {
             f.hints="Network mode owns input    +  Stop session safely";f.count=0;
         } else if(!v->network.enabled) {
-            f.hints="Add /switch/RecurCIV/network-token.txt, then restart NXInputRelay";
+            f.hints="Add /switch/NXInputRelay/network-token.txt, then restart NXInputRelay";
             f.buttons[0]=(ViewFooterButton){1030,180,"Home",ACTION_BACK};f.count=1;
         } else {
             f.hints="A  Restart listener    B  Home";

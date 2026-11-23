@@ -2,6 +2,20 @@
 
 All notable RecurCIV releases will be documented here.
 
+## [1.4.2] — 2026-11-23
+
+### Added
+
+- Interactive, non-overwriting token generation in `nxinputrelay_net.py`. The
+  generated file is stored beside the client and its value is never printed.
+
+### Changed
+
+- The NRO and sysmodule now prefer
+  `/switch/NXInputRelay/network-token.txt`.
+- `/switch/RecurCIV/network-token.txt` remains a fallback for existing
+  installations.
+
 ## [1.4.1] — 2026-11-23
 
 ### Fixed

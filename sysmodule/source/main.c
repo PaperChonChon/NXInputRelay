@@ -63,6 +63,7 @@ static void prepare_data_directory(void) {
     if (mkdir("sdmc:/switch", 0777) != 0 && errno != EEXIST)
         return;
     (void)mkdir("sdmc:/switch/RecurCIV", 0777);
+    (void)mkdir("sdmc:/switch/NXInputRelay", 0777);
 }
 
 int main(int argc, char **argv) {

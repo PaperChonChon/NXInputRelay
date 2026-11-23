@@ -66,7 +66,7 @@ an active failure.
    `tools\network-token.txt` does not exist, approve the prompt to generate a
    unique token. The token value is not printed.
 3. Copy the generated file to
-   `sdmc:/switch/RecurCIV/network-token.txt`. Keep the original beside
+   `sdmc:/switch/NXInputRelay/network-token.txt`. Keep the original beside
    `nxinputrelay_net.py`; the client loads it automatically.
 4. Connect Switch 1 to the same isolated LAN as the controlling computer and
    start NXInputRelay. No Internet connection is used or required.
@@ -82,6 +82,10 @@ Switch 1, send `quit`, close the socket, or remain idle for five minutes to end
 the session. NXInputRelay sends keyboard-up and a neutral gamepad report before
 returning control. If the USB target disconnects during cleanup, reconnect it so
 neutral delivery can finish.
+
+Existing installations may leave the token at
+`sdmc:/switch/RecurCIV/network-token.txt`. NXInputRelay checks that legacy path
+only when the new token file is absent.
 
 ## Commands
 

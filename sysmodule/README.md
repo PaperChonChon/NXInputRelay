@@ -15,7 +15,7 @@ python .\build.py
 
 The script produces `nxinputrelay_sysmodule.nsp`, stages an installable tree at
 `atmosphere\contents\4200000000006001\`, and creates
-`nxinputrelay_sysmodule_v1.3.3-touch_atmosphere_4200000000006001.zip` for
+`nxinputrelay_sysmodule_v1.3.4-touch_atmosphere_4200000000006001.zip` for
 convenient SD-card installation.
 
 ## Install
@@ -24,7 +24,7 @@ convenient SD-card installation.
    it with the existing `atmosphere` folder.
 3. Run `python .\nro\tools\nxinputrelay_net.py` from the repository without a
    host. Approve token generation, then copy the generated
-   `nro\tools\network-token.txt` to `/switch/RecurCIV/network-token.txt` on the
+   `nro\tools\network-token.txt` to `/switch/NXInputRelay/network-token.txt` on the
    SD card. Keep the local copy for the client.
 4. Fully reboot Atmosphere. The service starts at boot and listens on TCP 6002.
 5. Inspect `/switch/RecurCIV/network-sysmodule.log` and
@@ -37,6 +37,10 @@ full reboot before the change takes effect.
 The sysmodule uses program ID `4200000000006001`. Change it in both
 `nxinputrelay_sysmodule.json` and `build.py` if that ID conflicts with another
 installed custom sysmodule.
+
+For compatibility, the sysmodule reads `/switch/RecurCIV/network-token.txt`
+only when the new NXInputRelay token path is absent. Logs remain under the
+legacy RecurCIV data directory in this release.
 
 ## Switching between the two versions
 

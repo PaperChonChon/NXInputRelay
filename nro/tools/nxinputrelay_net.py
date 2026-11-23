@@ -13,7 +13,7 @@ from pathlib import Path
 
 DEFAULT_TOKEN_FILE = Path(__file__).resolve().with_name("network-token.txt")
 LEGACY_TOKEN_FILE = Path(__file__).resolve().parents[1] / "network-token.txt"
-SWITCH_TOKEN_PATH = "/switch/RecurCIV/network-token.txt"
+SWITCH_TOKEN_PATH = "/switch/NXInputRelay/network-token.txt"
 
 KEY_MAP = """NXInputRelay descriptive keyboard map (case-insensitive)
 

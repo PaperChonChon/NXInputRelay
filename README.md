@@ -46,7 +46,7 @@ python .\nro\tools\nxinputrelay_net.py
 
 If `network-token.txt` is not beside the client, it offers to generate a unique
 token and prints the exact SD-card destination. Copy the generated file to
-`/switch/RecurCIV/network-token.txt`, keep the local copy beside the client,
+`/switch/NXInputRelay/network-token.txt`, keep the local copy beside the client,
 then restart NXInputRelay before connecting.
 
 **To enable the sysmodule on Atmosphere, press L1 + D-pad Down + R3, go to Sysmodules, go to nxinputrelay and press Y to enable (it should show a Home icon). Restart to take effect. Note that this module consumes ~1.32MB ram, you cannot enable some other sysmodules together with this (like sys-botbase).**
@@ -54,9 +54,11 @@ then restart NXInputRelay before connecting.
 ## Security
 
 The network service is disabled until
-`sdmc:/switch/RecurCIV/network-token.txt` contains an 8–64 character printable
-token without spaces. The legacy RecurCIV data directory is retained in this
-release so existing tokens, macros, settings, and diagnostics keep working.
+`sdmc:/switch/NXInputRelay/network-token.txt` contains an 8–64 character
+printable token without spaces. Existing installations may retain the token at
+`sdmc:/switch/RecurCIV/network-token.txt`; both services use that location only
+as a fallback when the new path is absent. Other legacy macros, settings, and
+diagnostics remain compatible.
 The protocol is intended for a trusted, isolated local network; it does not
 provide transport encryption.
 

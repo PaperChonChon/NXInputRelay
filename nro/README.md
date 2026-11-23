@@ -2,7 +2,7 @@
 
 **USB Controller, Keyboard, Macro Studio & Civilization VII Automation**
 
-**Current source version: 1.4.1**
+**Current source version: 1.4.2**
 
 NXInputRelay is a Nintendo Switch homebrew application based on RecurCIV,
 combining USB controller input, keyboard functionality, controller macro
@@ -39,13 +39,15 @@ controller, keyboard, and absolute touch commands from a computer on the local
 network. Inputs can target Switch 1 locally or the USB host. Switch 1 touch uses
 native `hid:dbg`; Switch 2 touch uses an experimental USB HID digitizer and
 depends on host enumeration. It is disabled unless
-`sdmc:/switch/RecurCIV/network-token.txt` contains a valid token. See
+`sdmc:/switch/NXInputRelay/network-token.txt` contains a valid token. See
 [Network input](docs/network-input.md) for setup, protocol, cleanup behavior,
 and the bundled Python client.
 
 Run `python .\tools\nxinputrelay_net.py` without a host on first use. If the
 local token file is missing, the client offers to generate it and prints the
 SD-card copy instructions without displaying the token itself.
+The former `sdmc:/switch/RecurCIV/network-token.txt` location remains a fallback
+for existing installations.
 
 The home screen includes a dedicated **Network Control** landing page. It
 shows listener health plus the active and last target, opens automatically

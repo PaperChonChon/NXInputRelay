@@ -23,7 +23,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#define NETWORK_TOKEN_PATH "sdmc:/switch/RecurCIV/network-token.txt"
+#define NETWORK_TOKEN_PATH "sdmc:/switch/NXInputRelay/network-token.txt"
+#define NETWORK_TOKEN_LEGACY_PATH "sdmc:/switch/RecurCIV/network-token.txt"
 #define NETWORK_LOG_PATH "sdmc:/switch/RecurCIV/network-sysmodule.log"
 #define NETWORK_LOG_OLD_PATH "sdmc:/switch/RecurCIV/network-sysmodule.log.1"
 #define NETWORK_LOG_MAX_BYTES (1024u*1024u)
@@ -240,10 +241,18 @@ static void reply(const char *message) {
 }
 
 static bool load_token(void) {
-    FILE *file=fopen(NETWORK_TOKEN_PATH,"r");
+    const char *token_path=NETWORK_TOKEN_PATH;
+    FILE *file=fopen(token_path,"r");
     if(!file) {
-        network_event(network.clock_now,"disabled: missing %s",NETWORK_TOKEN_PATH);
-        return false;
+        token_path=NETWORK_TOKEN_LEGACY_PATH;
+        file=fopen(token_path,"r");
+        if(!file) {
+            network_event(network.clock_now,"disabled: missing %s (legacy fallback %s also missing)",
+                NETWORK_TOKEN_PATH,NETWORK_TOKEN_LEGACY_PATH);
+            return false;
+        }
+        network_event(network.clock_now,"using legacy token path %s; move it to %s",
+            NETWORK_TOKEN_LEGACY_PATH,NETWORK_TOKEN_PATH);
     }
     bool ok=fgets(network.token,sizeof(network.token),file)!=NULL;
     fclose(file);

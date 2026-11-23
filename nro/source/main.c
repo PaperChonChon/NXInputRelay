@@ -92,9 +92,9 @@ static const char *mkdir_error_path;
 static char manual_log_result[144]="No manual snapshot yet";
 
 static bool prepare_log_directory(const char **failed_path,int *error_number) {
-    const char *paths[]={"sdmc:/switch","sdmc:/switch/RecurCIV"};
+    const char *paths[]={"sdmc:/switch","sdmc:/switch/RecurCIV","sdmc:/switch/NXInputRelay"};
     bool ok=true;
-    for(size_t i=0;i<2;i++) {
+    for(size_t i=0;i<3;i++) {
         if(mkdir(paths[i],0777)!=0) {
             int e=errno;
             if(e!=EEXIST && ok) { *failed_path=paths[i];*error_number=e;ok=false; }
