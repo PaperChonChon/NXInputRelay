@@ -1,6 +1,28 @@
-# RecurCIV — Credits and Third-Party Licenses
+# NXInputRelay — Credits and Third-Party Licenses
 
-RecurCIV builds upon open-source projects and libraries developed by their respective authors and contributors.
+NXInputRelay builds upon open-source projects and libraries developed by their respective authors and contributors.
+
+## RecurCIV
+
+**Project:** [bbongpark/RecurCIV](https://github.com/bbongpark/RecurCIV), a
+mirror of the original [OR3OTHUG/RecurCIV](https://codeberg.org/OR3OTHUG/RecurCIV)
+
+NXInputRelay is based on RecurCIV and retains its USB keyboard, USB controller,
+Macro Studio, and Civilization VII automation functionality. NXInputRelay adds
+authenticated network input, local Switch input, and a boot-time Atmosphere
+sysmodule companion while preserving RecurCIV's source history, attribution,
+and GPL-3.0 licensing.
+
+## sys-botbase
+
+**Project:** [olliz0r/sys-botbase](https://github.com/olliz0r/sys-botbase)
+
+sys-botbase is credited as an important design and protocol reference for
+socket-controlled Nintendo Switch input and persistent sysmodule operation.
+NXInputRelay implements its own authenticated input service and does not claim
+sys-botbase's memory-access or screen-capture features.
+
+**License:** GPL-3.0
 
 ## Plume USB
 
@@ -98,8 +120,10 @@ Thanks to the Plume USB contributors, including AsteroidPizza39 for the auto-ind
 
 ## License Compliance
 
-Third-party copyrights and licenses remain the property of their respective owners. RecurCIV is not an official release of Plume USB or CivSwitch.
+Third-party copyrights and licenses remain the property of their respective
+owners. NXInputRelay is not an official release of RecurCIV, sys-botbase,
+Plume USB, or CivSwitch.
 
-The combined RecurCIV software distribution is offered under GPLv3, not MIT
+The combined NXInputRelay software distribution is offered under GPLv3, not MIT
 alone. Original permissive licenses remain applicable to their respective
 components; fonts remain OFL. See `LICENSING.md` for scope and source access.
