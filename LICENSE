@@ -1,10 +1,10 @@
-RecurCIV licensing
-=================
+NXInputRelay licensing
+======================
 
-The combined RecurCIV software distribution, including its embedded
+The combined NXInputRelay software distribution, including its embedded
 Civilization VII automation payload, is distributed under the GNU General
 Public License, version 3 only (SPDX-License-Identifier: GPL-3.0-only).
-The full license is in COPYING. RecurCIV-specific application contributions,
+The full license is in COPYING. NXInputRelay-specific application contributions,
 tests, build/release tooling, and documentation are offered on those terms.
 
 This does not replace or revoke the original licenses of incorporated work.

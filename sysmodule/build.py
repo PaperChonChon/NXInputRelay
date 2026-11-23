@@ -1,4 +1,4 @@
-"""Build and package the RecurCIV Atmosphere sysmodule."""
+"""Build and package the NXInputRelay Atmosphere sysmodule."""
 
 import hashlib
 import os
@@ -15,7 +15,7 @@ EXE = ".exe" if os.name == "nt" else ""
 GCC = KIT / "devkitA64/bin" / f"aarch64-none-elf-gcc{EXE}"
 TOOLS = KIT / "tools/bin"
 BUILD = ROOT / "build"
-TARGET = ROOT / "recurciv_sysmodule"
+TARGET = ROOT / "nxinputrelay_sysmodule"
 PACKAGE = ROOT / "atmosphere/contents" / TITLE_ID
 ENV = os.environ.copy()
 ENV["DEVKITPRO"] = KIT.as_posix()
@@ -94,7 +94,7 @@ def main() -> None:
         )
     print(f"Static image memory: {image_memory / 1048576:.2f} MiB (limit 2.00 MiB)")
     run(TOOLS / f"elf2nso{EXE}", elf, nso)
-    run(TOOLS / f"npdmtool{EXE}", ROOT / "recurciv_sysmodule.json", npdm)
+    run(TOOLS / f"npdmtool{EXE}", ROOT / "nxinputrelay_sysmodule.json", npdm)
 
     exefs = BUILD / "exefs"
     if exefs.exists():
@@ -111,7 +111,7 @@ def main() -> None:
     # Windows MTP/ZIP copy paths that discard zero-byte files still transfer it.
     (PACKAGE / "flags/boot2.flag").write_text("boot2\n", encoding="ascii")
 
-    archive_base = ROOT / f"recurciv_sysmodule_v1.3.3-touch_atmosphere_{TITLE_ID}"
+    archive_base = ROOT / f"nxinputrelay_sysmodule_v1.3.3-touch_atmosphere_{TITLE_ID}"
     archive = Path(shutil.make_archive(str(archive_base), "zip", ROOT, "atmosphere"))
 
     print(f"Built: {nsp}")

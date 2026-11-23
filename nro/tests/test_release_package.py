@@ -27,8 +27,8 @@ def rejected(data):
     raise AssertionError('Unsafe or corrupt archive accepted')
 
 
-assert package['zip_files'](archive([('switch/RecurCIV/RecurCIV.nro', b'nro'), ('COPYING', b'notice')])) == {
-    'switch/RecurCIV/RecurCIV.nro': b'nro', 'COPYING': b'notice'}
+assert package['zip_files'](archive([('switch/NXInputRelay/NXInputRelay.nro', b'nro'), ('COPYING', b'notice')])) == {
+    'switch/NXInputRelay/NXInputRelay.nro': b'nro', 'COPYING': b'notice'}
 for name in ('../outside', '/absolute', 'C:/absolute', 'folder/../../outside'):
     rejected(archive([(name, b'bad')]))
 # ZipInfo normalizes backslashes when writing on Windows; inject the raw name

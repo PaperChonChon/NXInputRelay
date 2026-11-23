@@ -1,6 +1,6 @@
-# RecurCIV sysmodule
+# NXInputRelay sysmodule
 
-This is the headless, boot-time counterpart to the RecurCIV NRO. It keeps the
+This is the headless, boot-time counterpart to the NXInputRelay NRO. It keeps the
 TCP 6002 authenticated input listener running independently of the foreground
 application. Each authenticated client selects either Switch 1 local input or
 the composite USB keyboard/gamepad/experimental digitizer connected to Switch 2.
@@ -13,9 +13,9 @@ With devkitPro installed at `C:\devkitPro`:
 python .\build.py
 ```
 
-The script produces `recurciv_sysmodule.nsp`, stages an installable tree at
+The script produces `nxinputrelay_sysmodule.nsp`, stages an installable tree at
 `atmosphere\contents\4200000000006001\`, and creates
-`recurciv_sysmodule_v1.3.3-touch_atmosphere_4200000000006001.zip` for
+`nxinputrelay_sysmodule_v1.3.3-touch_atmosphere_4200000000006001.zip` for
 convenient SD-card installation.
 
 ## Install
@@ -28,12 +28,12 @@ convenient SD-card installation.
 4. Inspect `/switch/RecurCIV/network-sysmodule.log` and
    `/switch/RecurCIV/usb.log` if it does not accept connections.
 
-The included `toolbox.json` exposes the service as `sys-RecurCIV` in compatible
+The included `toolbox.json` exposes the service as `sys-NXInputRelay` in compatible
 Tesla sysmodule managers. Toggling it changes its boot state and requires a
 full reboot before the change takes effect.
 
 The sysmodule uses program ID `4200000000006001`. Change it in both
-`recurciv_sysmodule.json` and `build.py` if that ID conflicts with another
+`nxinputrelay_sysmodule.json` and `build.py` if that ID conflicts with another
 installed custom sysmodule.
 
 ## Switching between the two versions
@@ -63,8 +63,8 @@ port 6002, so specify that port when targeting Switch 1 (whose NRO default is
 otherwise port 6001):
 
 ```powershell
-python ..\recurciv\tools\recurciv_net.py 192.168.137.249 --target sw1 --port 6002
-python ..\recurciv\tools\recurciv_net.py 192.168.137.249 --target sw2 --port 6002
+python ..\nro\tools\nxinputrelay_net.py 192.168.137.249 --target sw1 --port 6002
+python ..\nro\tools\nxinputrelay_net.py 192.168.137.249 --target sw2 --port 6002
 ```
 
 `sw1` creates temporary `hid:dbg` virtual controller, keyboard, and touch
@@ -80,8 +80,8 @@ macro syntax, HOME/CAPTURE commands, and rotating diagnostic log as the NRO.
 Keyboard commands accept the same case-insensitive descriptive names and
 modifier chords as the NRO (`key up`, `key ctrl+a`, `key alt+f4`, and
 `keyDown shift+left`) while retaining numeric HID usages such as `key 82`.
-Run `python ..\recurciv\tools\recurciv_net.py --list-keys` for the complete map.
-Run `python ..\recurciv\tools\recurciv_net.py --list-inputs` for the
+Run `python ..\nro\tools\nxinputrelay_net.py --list-keys` for the complete map.
+Run `python ..\nro\tools\nxinputrelay_net.py --list-inputs` for the
 controller, keyboard, and touch protocol, including `tap`, `touchDown`
 (`tapDown` alias), `touchMove`, and `touchUp`.
 The sysmodule uses `network-sysmodule.log` and

@@ -1,4 +1,4 @@
-"""Small authenticated client for RecurCIV's TCP input service."""
+"""Small authenticated client for NXInputRelay's TCP input service."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from pathlib import Path
 
 DEFAULT_TOKEN_FILE = Path(__file__).resolve().parents[1] / "network-token.txt"
 
-KEY_MAP = """RecurCIV descriptive keyboard map (case-insensitive)
+KEY_MAP = """NXInputRelay descriptive keyboard map (case-insensitive)
 
 Chord syntax
   key ctrl+a                 tap Ctrl+A
@@ -61,7 +61,7 @@ Raw compatibility
 Controller commands are separate: for example, click DUP and click HOME.
 """
 
-INPUT_MAP = """RecurCIV network input map
+INPUT_MAP = """NXInputRelay network input map
 
 Touchscreen coordinates
   Coordinates use the native 1280x720 landscape space:
@@ -111,7 +111,7 @@ def receive_line(connection: socket.socket) -> str:
     while not data.endswith(b"\n"):
         chunk = connection.recv(1)
         if not chunk:
-            raise ConnectionError("RecurCIV closed the connection")
+            raise ConnectionError("NXInputRelay closed the connection")
         data.extend(chunk)
         if len(data) > 4096:
             raise ConnectionError("response line is too long")
@@ -181,7 +181,7 @@ def wait_until_idle(connection: socket.socket, timeout: float = 120.0) -> None:
             time.sleep(0.2)
             return
         time.sleep(0.05)
-    raise TimeoutError("RecurCIV input queues did not drain within 120 seconds")
+    raise TimeoutError("NXInputRelay input queues did not drain within 120 seconds")
 
 
 def run_macro(connection: socket.socket, steps: list[tuple[int, str, str | float]]) -> None:
@@ -200,7 +200,7 @@ def run_macro(connection: socket.socket, steps: list[tuple[int, str, str | float
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Send input through RecurCIV")
+    parser = argparse.ArgumentParser(description="Send input through NXInputRelay")
     parser.add_argument("host", nargs="?", help="Switch 1 IP address")
     parser.add_argument("command", nargs="*", help="command, or 'type TEXT'")
     parser.add_argument("--macro", type=Path, help="run commands and delays from a UTF-8 text file")
@@ -273,7 +273,7 @@ def main() -> int:
         print("Enter commands; Ctrl+C or 'quit' exits.")
         try:
             while True:
-                command = input("recurciv> ").strip()
+                command = input("nxinputrelay> ").strip()
                 if not command:
                     continue
                 if command.lower() in {"help", "help keys", "keys"}:

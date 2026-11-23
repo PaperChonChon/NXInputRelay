@@ -1,19 +1,19 @@
-# RecurCIV licensing and source availability
+# NXInputRelay licensing and source availability
 
 ## Combined software
 
-RecurCIV v1.1.0 is distributed as a combined software work under **GNU GPL
+NXInputRelay, derived from RecurCIV v1.1.0, is distributed as a combined software work under **GNU GPL
 version 3 only (`GPL-3.0-only`)**, including its embedded automatic Civilization
 VII payload. The complete terms are in `COPYING`. You may use, study, modify,
 and redistribute the software under those terms, without warranty, subject
 to applicable law. This is a license statement, not a legal opinion.
 
-RecurCIV-specific contributions in `source/`, `include/`, `tests/`, `tools/`,
+NXInputRelay- and RecurCIV-specific contributions in `source/`, `include/`, `tests/`, `tools/`,
 `build.py`, and project documentation are offered under GPLv3. These licensing
 and initial v1.0.0 release-packaging changes were prepared on 2026-11-05. The then-existing
 functional C source, headers, tests, USB implementation, UI, fonts, icon,
 `build.py`, and approved `payload.txt` were not modified by this preparation.
-See `CHANGELOG.md` for RecurCIV's functional changes from Plume USB.
+See `CHANGELOG.md` for inherited RecurCIV changes from Plume USB.
 
 ## Original licenses are retained
 
@@ -33,7 +33,7 @@ Do not remove original copyright, permission, attribution, exception, or
 no-warranty notices. The combined-work GPL designation does not relicense
 the fonts, erase MIT permissions on separable upstream code, or claim
 ownership of other authors' contributions. Do not infer an upstream
-"or later" grant from RecurCIV's chosen version designation.
+"or later" grant from NXInputRelay's chosen version designation.
 
 The Manrope font's embedded metadata says copyright 2019; its accompanying
 upstream OFL notice says copyright 2018. Both original notices are retained,
@@ -59,7 +59,7 @@ credits, and `licences/` directory intact. The standalone `.nro` is not a
 self-contained legal-notice package: accompany it with the matching notices
 archive, and retain those notices when redistributing it.
 
-For the v1.1.0 public GitHub release, provide `RecurCIV-v1.1.0-source.zip`
+For each public release, provide the matching `NXInputRelay-vVERSION-source.zip`
 beside the binaries, at no additional charge, with an explicit link in the
 release description. That archive must include the complete application
 source, payload and its editable sources/generator, required assets, tests,
@@ -77,9 +77,9 @@ section 5(d) upstream-interface exception and its limits are discussed in
 the runtime/licensing review; publication must not silently assume that
 external documentation cures an independently required in-app notice.
 
-Confirm rights to RecurCIV-specific contributions and the icon before
+Confirm rights to NXInputRelay- and RecurCIV-specific contributions and the icon before
 publication. Open-source license compliance does not by itself resolve
 anti-circumvention, trademark, contract, or other jurisdiction-specific law.
-RecurCIV is not endorsed by Nintendo, Firaxis/2K, Netflix, or the upstream
+NXInputRelay is not endorsed by Nintendo, Firaxis/2K, Netflix, or the upstream
 projects. No game executable, console firmware, proprietary SDK, or console
 signing key is included in this release preparation.

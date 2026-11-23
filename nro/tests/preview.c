@@ -124,7 +124,7 @@ int main(void) {
     strcpy(view.preview,"Hello.\nUSB keyboard test: 0123456789.\nAccent test: é è à ç ù.");
     save(&view,"confirm-dark.ppm");
     view.composing=true;view.compose_valid=true;view.compose_pages=1;view.caps_state=-1;
-    strcpy(view.name,"Compose & Send");strcpy(view.compose_rows[0],"Hello from RecurCIV.");
+    strcpy(view.name,"Compose & Send");strcpy(view.compose_rows[0],"Hello from NXInputRelay.");
     strcpy(view.compose_rows[1],"Review text before sending.");view.selected=0;save(&view,"compose-review.ppm");
     save(&view,"compose-send-confirmation.ppm");
     view.selected=3;save(&view,"compose-settings-focus.ppm");

@@ -1,10 +1,13 @@
-# RecurCIV
+# NXInputRelay
 
 **USB Controller, Keyboard, Macro Studio & Civilization VII Automation**
 
-**Current release: [v1.1.0](https://github.com/OR3OTHUG/RecurCIV/releases/tag/v1.1.0)**
+**Current source version: 1.4.1**
 
-RecurCIV is a Nintendo Switch homebrew application combining USB controller input, keyboard functionality, controller macro creation and playback, and automated Civilization VII exploit delivery.
+NXInputRelay is a Nintendo Switch homebrew application based on RecurCIV,
+combining USB controller input, keyboard functionality, controller macro
+creation and playback, authenticated network input, and automated Civilization
+VII exploit delivery.
 
 Built on [Plume USB](https://github.com/MichelSama/plume-usb), with Civilization VII automation based on [CivSwitch](https://github.com/Gezine/CivSwitch).
 
@@ -23,11 +26,11 @@ Keyboard output uses the US QWERTY layout. Text files support UTF-8 input with p
 
 ### USB Controller
 
-Use RecurCIV to send controller inputs to a compatible connected USB host.
+Use NXInputRelay to send controller inputs to a compatible connected USB host.
 
 The controller interface supports buttons, D-pad directions, and analog stick inputs.
 
-For game control, ensure the receiving console recognizes RecurCIV as the intended active controller.
+For game control, ensure the receiving console recognizes NXInputRelay as the intended active controller.
 
 ### Network Input
 
@@ -45,7 +48,7 @@ shows listener health plus the active and last target, opens automatically
 when a remote client authenticates, and makes exclusive remote ownership
 visible before the user returns to local USB tools.
 
-Use `python .\tools\recurciv_net.py --list-inputs` for the exhaustive
+Use `python .\tools\nxinputrelay_net.py --list-inputs` for the exhaustive
 offline command reference, including `tap`, `touchDown`/`tapDown`,
 `touchMove`, and `touchUp`.
 
@@ -94,7 +97,7 @@ confirmation. Recording is limited to 1,024 states or ten minutes.
 
 ### Macro Library
 
-Manage saved macros directly within RecurCIV:
+Manage saved macros directly within NXInputRelay:
 
 - Load and play macros.
 - Edit existing macros.
@@ -109,20 +112,20 @@ sdmc:/switch/RecurCIV/macros/
 
 ### Importing and Sharing Macros
 
-RecurCIV supports manually importing compatible macro files.
+NXInputRelay supports manually importing compatible macro files.
 
-1. Obtain a RecurCIV-compatible macro file.
+1. Obtain an NXInputRelay-compatible macro file.
 2. Access your Switch SD card using a computer or file-transfer utility.
 3. Open `switch/RecurCIV/macros/`.
 4. Copy the macro file into that directory.
-5. Launch RecurCIV and open **Macro Library**.
+5. Launch NXInputRelay and open **Macro Library**.
 6. Select the imported macro to review, edit, or play it.
 
 Imported macros must use the supported RCMS format. Invalid or incompatible files may be rejected.
 
 ### Civilization VII Automation
 
-RecurCIV includes an automated keyboard-input sequence for the Civilization VII exploit workflow associated with CivSwitch.
+NXInputRelay includes an automated keyboard-input sequence for the Civilization VII exploit workflow associated with CivSwitch.
 
 The sequence is embedded in the application, removing the need to manually type the exploit input.
 
@@ -130,37 +133,37 @@ Successful exploit execution does not automatically complete any subsequent netw
 
 ## Installation
 
-1. Download `RecurCIV-v1.1.0.zip` from the [v1.1.0 release](https://github.com/OR3OTHUG/RecurCIV/releases/tag/v1.1.0).
+1. Download an `NXInputRelay` release archive from this repository's Releases page.
 2. Extract it to the root of your Switch SD card.
 3. Confirm the application is located at:
 
 ```text
-sdmc:/switch/RecurCIV/RecurCIV.nro
+sdmc:/switch/NXInputRelay/NXInputRelay.nro
 ```
 
-4. Launch RecurCIV through the Homebrew Menu.
+4. Launch NXInputRelay through the Homebrew Menu.
 
 Full application mode is recommended.
 
-Keep the accompanying license notices in `switch/RecurCIV/`. They are part
+Keep the accompanying license notices in `switch/NXInputRelay/`. They are part
 of the distribution and do not change application operation. The install ZIP
 includes the NRO and its notices; a separate notices download is not required.
 Complete corresponding source, assets, build/test tools, payload sources and
-runtime source snapshots are supplied in `RecurCIV-v1.1.0-source.zip` beside it.
+runtime source snapshots are supplied in the matching `NXInputRelay` source archive.
 Do not replace existing macros or settings when upgrading; the RCMS format and
 storage paths are unchanged.
 
 ## USB Connection
 
-Connect the Switch running RecurCIV to the target USB host using a compatible data connection.
+Connect the Switch running NXInputRelay to the target USB host using a compatible data connection.
 
-For a Switch 2 dock, a USB-A-to-USB-C data cable can connect the dock's USB host port to the Switch running RecurCIV.
+For a Switch 2 dock, a USB-A-to-USB-C data cable can connect the dock's USB host port to the Switch running NXInputRelay.
 
 Direct USB-C-to-USB-C connections depend on USB role negotiation and may not behave identically.
 
 Wait for the appropriate USB connection status before sending keyboard or controller inputs.
 
-For controller macros, configure the receiving device so RecurCIV is recognized as the intended controller.
+For controller macros, configure the receiving device so NXInputRelay is recognized as the intended controller.
 
 ## Keyboard Controls
 
@@ -204,7 +207,7 @@ Auto-indent compensation is intended for editors that automatically copy the pre
 
 ## USB Diagnostics
 
-RecurCIV can record USB configuration, transfer, and error information.
+NXInputRelay can record USB configuration, transfer, and error information.
 
 Diagnostic log:
 
@@ -216,7 +219,7 @@ If a connection fails, try reconnecting the cable, resetting USB from diagnostic
 
 ## Compatibility
 
-RecurCIV currently runs on a homebrew-enabled Nintendo Switch and has been used with a Switch 2 as a connected USB target.
+NXInputRelay currently runs on a homebrew-enabled Nintendo Switch and has been used with a Switch 2 as a connected USB target.
 
 Native execution on future homebrew-capable Switch hardware depends on the available homebrew environment, libnx support, and USB services.
 
@@ -258,7 +261,7 @@ py build.py
 The build produces:
 
 ```text
-build/RecurCIV.nro
+build/NXInputRelay.nro
 ```
 
 The build requires the included assets and `payload.txt`.
@@ -294,7 +297,7 @@ not substitutes for hardware verification.
 
 ## Credits and Licensing
 
-RecurCIV incorporates work from:
+NXInputRelay incorporates work from:
 
 - **Plume USB** — MichelSama and contributors.
 - **CivSwitch** — Gezine.
@@ -304,7 +307,7 @@ RecurCIV incorporates work from:
 - **stb_truetype** — Sean Barrett.
 - **Manrope and Outfit** — font authors and contributors.
 
-The **combined RecurCIV software distribution is GPLv3 (`GPL-3.0-only`)**,
+The **combined NXInputRelay software distribution is GPLv3 (`GPL-3.0-only`)**,
 including its embedded automation payload. Original Plume USB and
 CivSwitch MIT notices remain intact; other dependencies and fonts retain
 their respective licenses. CivSwitch's MIT notice does not remove GPL

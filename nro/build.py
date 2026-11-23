@@ -53,10 +53,10 @@ for source in sorted((root/'source').glob('*.c')):
     obj=build/(source.stem+'.o')
     objects.append(obj)
     run(gcc,*flags,'-c',source,'-o',obj)
-target=build/'RecurCIV'
+target=build/'NXInputRelay'
 run(gcc,f'-specs={kit.as_posix()}/libnx/switch.specs',
     '-march=armv8-a+crc+crypto','-mtune=cortex-a57','-mtp=soft','-fPIE',
     f'-Wl,-Map,{target.as_posix()}.map','-Wl,-u,recurciv_payload',*objects,f'-L{kit.as_posix()}/libnx/lib','-lnx','-lm','-o',str(target)+'.elf')
-run(tools/f'nacptool{exe}','--create','RecurCIV','OR3OTHUG',VERSION,str(target)+'.nacp')
-run(tools/f'elf2nro{exe}',str(target)+'.elf',str(target)+'.nro',f'--nacp={target.as_posix()}.nacp',f'--icon={root.as_posix()}/assets/recurciv-icon.jpg')
+run(tools/f'nacptool{exe}','--create','NXInputRelay','NXInputRelay contributors',VERSION,str(target)+'.nacp')
+run(tools/f'elf2nro{exe}',str(target)+'.elf',str(target)+'.nro',f'--nacp={target.as_posix()}.nacp',f'--icon={root.as_posix()}/assets/nxinputrelay-icon.jpg')
 print('Built:',str(target)+'.nro')

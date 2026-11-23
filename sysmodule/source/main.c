@@ -85,7 +85,7 @@ int main(int argc, char **argv) {
             Result gamepad_rc = R_SUCCEEDED(usb_rc) ? gamepad_init() : usb_rc;
             if (R_SUCCEEDED(usb_rc) && R_SUCCEEDED(gamepad_rc)) {
                 usb_online = true;
-                keyboard_log("RecurCIV sysmodule USB acquired; TCP port=%u remains active",
+                keyboard_log("NXInputRelay sysmodule USB acquired; TCP port=%u remains active",
                              NETWORK_INPUT_PORT);
             } else {
                 keyboard_log("Sysmodule USB unavailable: keyboard=0x%08lx gamepad=0x%08lx; port %u remains active; retrying in 5 seconds",

@@ -5,7 +5,7 @@ from pathlib import Path
 
 root = Path(__file__).resolve().parents[1]
 result = subprocess.run(
-    [sys.executable, str(root / "tools" / "recurciv_net.py"), "--list-keys"],
+    [sys.executable, str(root / "tools" / "nxinputrelay_net.py"), "--list-keys"],
     cwd=root,
     text=True,
     capture_output=True,
@@ -19,7 +19,7 @@ for required in (
     assert required in reference, required
 assert "connecting to" not in reference
 inputs = subprocess.run(
-    [sys.executable, str(root / "tools" / "recurciv_net.py"), "--list-inputs"],
+    [sys.executable, str(root / "tools" / "nxinputrelay_net.py"), "--list-inputs"],
     cwd=root, text=True, capture_output=True, check=True,
 ).stdout.lower()
 for required in ("tap 640 360", "touchdown", "tapdown", "touchmove", "touchup", "1280x720", "touch-unavailable"):

@@ -4,7 +4,7 @@ from pathlib import Path
 
 root = Path(__file__).resolve().parent.parent
 payload = (root / 'payload.txt').read_bytes()
-nro = (root / 'build' / 'RecurCIV.nro').read_bytes()
+nro = (root / 'build' / 'NXInputRelay.nro').read_bytes()
 assert len(payload) == 21762
 assert sha256(payload).hexdigest() == '6ea468ca392558ab2f8f2384200745a8619187cebc5357d5e985fd3ffdada37d'
 assert sum(bool(line.strip()) for line in payload.splitlines()) == 87

@@ -481,7 +481,7 @@ static bool start_session(bool allowed,uint64_t now,NetworkTarget target) {
     network.cleanup_key_sent=network.cleanup_key_done=network.cleanup_pad_requested=false;
     network.cleanup_touch_sent=network.cleanup_touch_done=false;
     network.last_activity=now;network.session_started=now;network.phase=NET_ACTIVE;
-    char greeting[96];snprintf(greeting,sizeof(greeting),"OK RecurCIV network input v2 target=%s\n",target_name(target));
+    char greeting[96];snprintf(greeting,sizeof(greeting),"OK NXInputRelay network input v2 target=%s\n",target_name(target));
     reply(greeting);
     network_event(now,"authenticated; target=%s session acquired client_fd=%d",target_name(target),network.client_fd);
     return true;
@@ -509,7 +509,7 @@ static void handle_active_command(char *line,uint64_t now) {
     else snprintf(network.last_command,sizeof(network.last_command),"%s",argv[0]);
     network.last_activity=now;
     if(!strcasecmp(argv[0],"ping")) { reply("OK pong\n");return; }
-    if(!strcasecmp(argv[0],"getVersion")) { reply("RecurCIV-network-2\n");return; }
+    if(!strcasecmp(argv[0],"getVersion")) { reply("NXInputRelay-network-2\n");return; }
     if(!strcasecmp(argv[0],"status")) { command_status();return; }
     if(!strcasecmp(argv[0],"quit") || !strcasecmp(argv[0],"disconnect")) {
         reply("OK stopping\n");begin_cleanup("client requested stop");return;
@@ -699,7 +699,7 @@ static void accept_client(uint64_t now) {
     (void)inet_ntop(AF_INET,&address.sin_addr,peer,sizeof(peer));
     snprintf(network.client_address,sizeof(network.client_address),"%s:%u",peer,(unsigned)ntohs(address.sin_port));
     network_event(now,"client accepted fd=%d peer=%s:%u",client,peer,(unsigned)ntohs(address.sin_port));
-    reply("RecurCIV network input: auth <token> [switch1|switch2]\n");
+    reply("NXInputRelay network input: auth <token> [switch1|switch2]\n");
 }
 
 static void pump_keyboard(uint64_t now) {
@@ -909,7 +909,7 @@ static bool send_link_keepalive(uint64_t now) {
         network_event(now,"LAN keepalive socket failed errno=%d",errno);
         return false;
     }
-    static const char payload[]="RecurCIV";
+    static const char payload[]="NXInputRelay";
     struct sockaddr_in destination={0};
     destination.sin_family=AF_INET;destination.sin_addr.s_addr=gateway;destination.sin_port=htons(9);
     ssize_t sent=sendto(fd,payload,sizeof(payload)-1,0,(struct sockaddr *)&destination,sizeof(destination));
@@ -1005,7 +1005,7 @@ static void network_health_tick(uint64_t now) {
 bool network_input_init(void) {
     network=(NetworkInput){.phase=NET_DISABLED,.listen_fd=-1,.client_fd=-1};
     open_network_log();
-    network_event(0,"--- RecurCIV network input start ---");
+    network_event(0,"--- NXInputRelay network input start ---");
     if(!load_token()) return false;
     network.enabled=true;
     network.phase=NET_LISTENING;

@@ -72,7 +72,7 @@ ViewFooter view_footer(const View *v) {
         if(v->network.session_active || v->network.cleanup_active) {
             f.hints="Network mode owns input    +  Stop session safely";f.count=0;
         } else if(!v->network.enabled) {
-            f.hints="Add /switch/RecurCIV/network-token.txt, then restart RecurCIV";
+            f.hints="Add /switch/RecurCIV/network-token.txt, then restart NXInputRelay";
             f.buttons[0]=(ViewFooterButton){1030,180,"Home",ACTION_BACK};f.count=1;
         } else {
             f.hints="A  Restart listener    B  Home";
@@ -182,7 +182,7 @@ ViewFooter view_footer(const View *v) {
         f.buttons[2]=(ViewFooterButton){1050,160,"Back",ACTION_BACK};break;
     case SCREEN_CIV_PLACEHOLDER:
         if(v->civ.progress.shutdown_unresolved) {
-            f.hints="Close and restart RecurCIV. Cleanup was not confirmed.";f.count=0;
+            f.hints="Close and restart NXInputRelay. Cleanup was not confirmed.";f.count=0;
         } else if(v->civ.progress.owned) {
             if(view_civ_blocked(v)) {
                 f.hints="A  Retry cleanup    Menu navigation locked";
@@ -298,7 +298,7 @@ static void render_civ(const View *v) {
         ui_text(72,347,20,p.ink,"Multiplayer > Wireless > Create Game > Host Lobby",700);
         ui_text(72,381,20,p.ink,"Chat field focused",700);
         ui_text(72,415,20,p.ink,"Keyboard configuration: English-US",700);
-        ui_wrap(72,465,706,20,3,p.muted,"Prepare the wireless lobby manually and focus chat. RecurCIV does not navigate these menus.");
+        ui_wrap(72,465,706,20,3,p.muted,"Prepare the wireless lobby manually and focus chat. NXInputRelay does not navigate these menus.");
         ui_text(860,268,24,gold,"USB CONNECTION",348);
         ui_text(860,313,20,p.ink,c->ready?"Both HID interfaces ready":"USB not ready",348);
         ui_wrap(860,360,348,20,3,p.muted,"Minimum schedule: about 16m 33s. USB waits can make this longer.");
@@ -326,7 +326,7 @@ static void render_civ(const View *v) {
     ui_text(72,282,32,p.ink,text,1136);
     ui_text(72,334,24,p.muted,view_civ_stage(v),1136);
     const char *detail;
-    if(c->progress.shutdown_unresolved) detail="Forced shutdown left cleanup unresolved. Close and restart RecurCIV; neutral delivery is not confirmed.";
+    if(c->progress.shutdown_unresolved) detail="Forced shutdown left cleanup unresolved. Close and restart NXInputRelay; neutral delivery is not confirmed.";
     else if(view_civ_blocked(v)) detail="New runs and other modes are blocked until cleanup succeeds. Reconnect USB if needed, then select RETRY CLEANUP.";
     else if(c->progress.owned && !c->ready) detail="USB disconnected or not ready. Payload scheduling has stopped. Reconnect USB for neutral cleanup only; automation will not resume.";
     else if(c->progress.owned && (c->cancel_requested || r->status!=CIV_RUNNER_RUNNING) && !c->progress.acquiring)

@@ -68,8 +68,8 @@ def source_inputs():
         data = files[item['path']]
         if len(data) != item['bytes'] or sha(data) != item['sha256']:
             raise ValueError(f'Upstream source/notice mismatch: {item["path"]}')
-    nro = (ROOT / 'build/RecurCIV.nro').read_bytes()
-    nacp = (ROOT / 'build/RecurCIV.nacp').read_bytes()
+    nro = (ROOT / 'build/NXInputRelay.nro').read_bytes()
+    nacp = (ROOT / 'build/NXInputRelay.nacp').read_bytes()
     if nro[0x10:0x14] != b'NRO0' or nro.count(nacp) != 1:
         raise ValueError('Invalid NRO or missing NACP')
     if nacp[0x3060:0x3070].split(b'\0', 1)[0].decode() != version:
@@ -79,7 +79,7 @@ def source_inputs():
     for text in (b'Capture short press: Start/Stop', b'Holds are timed from state submission'):
         if text not in nro:
             raise ValueError(f'NRO is missing current implementation marker: {text!r}')
-    link_map = (ROOT / 'build/RecurCIV.map').read_text()
+    link_map = (ROOT / 'build/NXInputRelay.map').read_text()
     for symbol in ('capture_control_update', 'macro_app_capture', 'macro_live_record_start',
                    'appletSetRequiresCaptureButtonShortPressedMessage', 'macro_play_tick'):
         if symbol not in link_map:
@@ -88,7 +88,7 @@ def source_inputs():
     manifest = {
         'version': version, 'commit': commit,
         'tree': git('show', '-s', '--format=%T', 'HEAD').decode().strip(),
-        'repository': 'https://github.com/OR3OTHUG/RecurCIV',
+        'repository': 'https://github.com/PaperChonChon/NXInputRelay',
         'nro': {'bytes': len(nro), 'sha256': sha(nro)},
         'source_files': {name: sha(data) for name, data in sorted(files.items())},
     }
@@ -101,18 +101,18 @@ def install_files(version, files, nro, manifest):
         notices[name] = files[name]
     for name in ('assets/Manrope-OFL.txt', 'assets/Outfit-OFL.txt', 'third_party/libnx-LICENSE'):
         notices['licences/' + PurePosixPath(name).name] = files[name]
-    notices['RecurCIV.nro'] = nro
+    notices['NXInputRelay.nro'] = nro
     notices[MANIFEST] = manifest
     commit = json.loads(manifest)['commit']
     notices['SOURCE.txt'] = (
-        f'RecurCIV v{version} - complete corresponding source\n\n'
+        f'NXInputRelay v{version} - complete corresponding source\n\n'
         f'Commit: {commit}\n'
-        f'https://github.com/OR3OTHUG/RecurCIV/tree/{commit}\n'
-        f'https://github.com/OR3OTHUG/RecurCIV/releases/download/v{version}/RecurCIV-v{version}-source.zip\n\n'
+        f'https://github.com/PaperChonChon/NXInputRelay/tree/{commit}\n'
+        f'https://github.com/PaperChonChon/NXInputRelay/releases/download/v{version}/NXInputRelay-v{version}-source.zip\n\n'
         'The corresponding source ZIP is supplied beside the install ZIP at no additional charge.\n'
         'The combined distribution is GPL-3.0-only; retain COPYING and all original notices.\n'
     ).encode()
-    return {'switch/RecurCIV/' + name: data for name, data in notices.items()}
+    return {'switch/NXInputRelay/' + name: data for name, data in notices.items()}
 
 
 def write_zip(path, files):
@@ -132,9 +132,9 @@ def main():
     parser.add_argument('--output', type=Path, default=ROOT / 'release-ready')
     args = parser.parse_args()
     version, source, nro, manifest = source_inputs()
-    prefix = f'RecurCIV-v{version}/'
-    source_zip = args.output / f'RecurCIV-v{version}-source.zip'
-    install_zip = args.output / f'RecurCIV-v{version}.zip'
+    prefix = f'NXInputRelay-v{version}/'
+    source_zip = args.output / f'NXInputRelay-v{version}-source.zip'
+    install_zip = args.output / f'NXInputRelay-v{version}.zip'
     expected_source = {prefix + name: data for name, data in source.items()}
     expected_source[prefix + MANIFEST] = manifest
     expected_install = install_files(version, source, nro, manifest)

@@ -29,6 +29,7 @@ fatal_errors/
 *.map
 *.nso
 *.nsp
+*.npdm
 *.zip
 *.7z
 *.pdb

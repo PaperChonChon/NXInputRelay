@@ -20,14 +20,14 @@ becomes `network-nro.log.1`, and a new current log is opened.
 The listener checks the current IPv4 state every five seconds. Missing or
 loopback-only addressing closes the listener; restoration or address changes
 recreate the complete BSD socket service before accepting clients. While an
-IPv4 link is usable, RecurCIV sends an eight-byte UDP keepalive to the
+IPv4 link is usable, NXInputRelay sends an eight-byte UDP keepalive to the
 configured local gateway every 15 seconds to discourage access-point idle
 disconnects. This packet is local to the LAN and is not Internet traffic.
 It is strictly best-effort: an unreachable gateway never closes a TCP client
 or rebuilds the listener, and repeated failures back off to one retry per
 minute.
 
-RecurCIV can accept authenticated, newline-delimited input commands over TCP.
+NXInputRelay can accept authenticated, newline-delimited input commands over TCP.
 The Python client chooses either `--target sw2` to forward them through the
 existing USB keyboard/gamepad interfaces, or `--target sw1` to inject them locally through a
 temporary `hid:dbg` virtual controller and keyboard. The
@@ -35,7 +35,7 @@ listener uses TCP port `6001`, so an installed sys-botbase can continue using
 port `6000`.
 
 After console wake, a long application suspension, or a return from background
-focus, RecurCIV discards stale TCP state and recreates the socket service and
+focus, NXInputRelay discards stale TCP state and recreates the socket service and
 port `6001`. If Wi-Fi has not reconnected yet, listener creation retries with a
 1-second exponential backoff capped at 30 seconds. An active input session still
 performs neutral HID cleanup before a new client can authenticate. During true
@@ -44,7 +44,7 @@ starts when execution resumes.
 
 ## Network diagnostics
 
-RecurCIV appends timestamped network diagnostics to
+NXInputRelay appends timestamped network diagnostics to
 `sdmc:/switch/RecurCIV/network-nro.log`. The log records IP-address changes,
 listener generations and file descriptors, accepted clients, authentication
 failures/timeouts, send/receive/accept errors, recovery attempts, retry delays,
@@ -55,27 +55,28 @@ The log is flushed after every entry. At 1 MiB it rotates to
 `network-nro.log.1`,
 preserving one previous log. The broader USB log remains at
 `sdmc:/switch/RecurCIV/usb.log`, but that file is recreated whenever the USB
-service is initialized, so copy it before restarting RecurCIV when investigating
+service is initialized, so copy it before restarting NXInputRelay when investigating
 an active failure.
 
 ## Install and connect
 
-1. Copy the rebuilt `RecurCIV.nro` to `sdmc:/switch/RecurCIV/RecurCIV.nro`.
+1. Copy the rebuilt `NXInputRelay.nro` to
+   `sdmc:/switch/NXInputRelay/NXInputRelay.nro`.
 2. Copy `network-token.txt` to
    `sdmc:/switch/RecurCIV/network-token.txt`. Change its single line to a private
    8-64 character value without whitespace on both the Switch and client.
 3. Connect Switch 1 to the same isolated LAN as the controlling computer and
-   start RecurCIV. No Internet connection is used or required.
+   start NXInputRelay. No Internet connection is used or required.
 4. Connect to Switch 1 on TCP port 6001 and send either `auth TOKEN switch2\n`
    or `auth TOKEN switch1\n` within ten seconds. `switch2` authentication
-   succeeds only while RecurCIV's USB keyboard and gamepad are ready. `switch1`
+   succeeds only while NXInputRelay's USB keyboard and gamepad are ready. `switch1`
    initializes a temporary local virtual controller and keyboard and does not
    require a USB connection to Switch 2. Both targets require that no local
    macro, sender, controller passthrough, or CIV operation owns input.
 
-While authenticated, local RecurCIV input producers are paused. Press `+` on
+While authenticated, local NXInputRelay input producers are paused. Press `+` on
 Switch 1, send `quit`, close the socket, or remain idle for five minutes to end
-the session. RecurCIV sends keyboard-up and a neutral gamepad report before
+the session. NXInputRelay sends keyboard-up and a neutral gamepad report before
 returning control. If the USB target disconnects during cleanup, reconnect it so
 neutral delivery can finish.
 
@@ -119,7 +120,7 @@ Modifiers may be joined to a key with `+`. Generic `CTRL`, `SHIFT`, `ALT`, and
 Use the complete offline reference at any time without connecting to a Switch:
 
 ```powershell
-python .\tools\recurciv_net.py --list-keys
+python .\tools\nxinputrelay_net.py --list-keys
 ```
 
 In interactive mode, `help`, `help keys`, or `keys` prints the same key
@@ -127,7 +128,7 @@ reference. The complete controller/keyboard/touch command reference is available
 without a network connection:
 
 ```powershell
-python .\tools\recurciv_net.py --list-inputs
+python .\tools\nxinputrelay_net.py --list-inputs
 ```
 
 Interactive `help inputs`, `inputs`, `help touch`, or `touches` prints
@@ -135,27 +136,27 @@ that reference. Touch uses the Switch native 1280x720 coordinate space:
 `x=0..1279`, `y=0..719`.
 
 For `--target sw1`, touch is injected natively through Switch 1's `hid:dbg`
-service. For `--target sw2`, RecurCIV exposes an experimental, single-contact
+service. For `--target sw2`, NXInputRelay exposes an experimental, single-contact
 absolute USB HID digitizer on interface 2 / endpoint 0x83. Switch 2 acceptance
 of a generic USB digitizer is not guaranteed; if the host does not enumerate
 it, touch commands return `ERR touch-unavailable` while keyboard and gamepad
 remain independently usable.
 
-The bundled `tools/recurciv_net.py` client can be used interactively:
+The bundled `tools/nxinputrelay_net.py` client can be used interactively:
 
 ```powershell
-python .\tools\recurciv_net.py 192.168.137.249
+python .\tools\nxinputrelay_net.py 192.168.137.249
 ```
 
 Or for one command:
 
 ```powershell
-python .\tools\recurciv_net.py 192.168.137.249 click A
-python .\tools\recurciv_net.py 192.168.137.249 type "Hello from Python"
-python .\tools\recurciv_net.py 192.168.137.249 --target sw1 click A
-python .\tools\recurciv_net.py 192.168.137.249 --target sw2 key ctrl+shift+escape
-python .\tools\recurciv_net.py 192.168.137.249 --target sw1 tap 640 360
-python .\tools\recurciv_net.py 192.168.137.249 --target sw2 tap 640 360
+python .\tools\nxinputrelay_net.py 192.168.137.249 click A
+python .\tools\nxinputrelay_net.py 192.168.137.249 type "Hello from Python"
+python .\tools\nxinputrelay_net.py 192.168.137.249 --target sw1 click A
+python .\tools\nxinputrelay_net.py 192.168.137.249 --target sw2 key ctrl+shift+escape
+python .\tools\nxinputrelay_net.py 192.168.137.249 --target sw1 tap 640 360
+python .\tools\nxinputrelay_net.py 192.168.137.249 --target sw2 tap 640 360
 ```
 
 For longer typing jobs, use interactive mode or increase `--wait` so the client
@@ -166,7 +167,7 @@ does not disconnect before queued input finishes.
 Run a UTF-8 text macro with:
 
 ```powershell
-python .\tools\recurciv_net.py 192.168.137.249 --macro .\my-macro.txt
+python .\tools\nxinputrelay_net.py 192.168.137.249 --macro .\my-macro.txt
 ```
 
 Blank lines and lines beginning with `#` are ignored. `delay` is measured in
