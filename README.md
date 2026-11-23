@@ -1,6 +1,6 @@
 # NXInputRelay
 
-NXInputRelay extends [RecurCIV](https://github.com/bbongpark/RecurCIV) with
+NXInputRelay extends [RecurCIV](https://github.com/bbongpark/RecurCIV) and takes inspiration from [sys-botbase](https://github.com/olliz0r/sys-botbase/) with
 authenticated network input for Nintendo Switch homebrew. A client on the
 local network can send controller, keyboard, and experimental absolute-touch
 commands either to the console running RecurCIV (`sw1`) or through its USB
