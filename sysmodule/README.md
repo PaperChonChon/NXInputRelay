@@ -15,7 +15,7 @@ python .\build.py
 
 The script produces `nxinputrelay_sysmodule.nsp`, stages an installable tree at
 `atmosphere\contents\4200000000006001\`, and creates
-`nxinputrelay_sysmodule_v1.3.4-touch_atmosphere_4200000000006001.zip` for
+`nxinputrelay_sysmodule_v1.3.5-touch_atmosphere_4200000000006001.zip` for
 convenient SD-card installation.
 
 ## Install
@@ -27,8 +27,8 @@ convenient SD-card installation.
    `nro\tools\network-token.txt` to `/switch/NXInputRelay/network-token.txt` on the
    SD card. Keep the local copy for the client.
 4. Fully reboot Atmosphere. The service starts at boot and listens on TCP 6002.
-5. Inspect `/switch/RecurCIV/network-sysmodule.log` and
-   `/switch/RecurCIV/usb.log` if it does not accept connections.
+5. Inspect `/switch/NXInputRelay/network-sysmodule.log` and
+   `/switch/NXInputRelay/usb.log` if it does not accept connections.
 
 The included `toolbox.json` exposes the service as `sys-NXInputRelay` in compatible
 Tesla sysmodule managers. Toggling it changes its boot state and requires a
@@ -90,8 +90,8 @@ Run `python ..\nro\tools\nxinputrelay_net.py --list-keys` for the complete map.
 Run `python ..\nro\tools\nxinputrelay_net.py --list-inputs` for the
 controller, keyboard, and touch protocol, including `tap`, `touchDown`
 (`tapDown` alias), `touchMove`, and `touchUp`.
-The sysmodule uses `network-sysmodule.log` and
-`network-sysmodule.log.1`; these are separate from the NRO logs.
+The sysmodule writes `/switch/NXInputRelay/network-sysmodule.log` and rotates
+it to `network-sysmodule.log.1`; these are separate from the NRO logs.
 While IPv4 is available it sends an eight-byte UDP keepalive to the configured
 local gateway every 15 seconds. Address loss/change rebuilds the BSD socket
 service and listener instead of trusting a stale local socket descriptor.

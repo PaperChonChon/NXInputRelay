@@ -25,8 +25,8 @@
 
 #define NETWORK_TOKEN_PATH "sdmc:/switch/NXInputRelay/network-token.txt"
 #define NETWORK_TOKEN_LEGACY_PATH "sdmc:/switch/RecurCIV/network-token.txt"
-#define NETWORK_LOG_PATH "sdmc:/switch/RecurCIV/network-sysmodule.log"
-#define NETWORK_LOG_OLD_PATH "sdmc:/switch/RecurCIV/network-sysmodule.log.1"
+#define NETWORK_LOG_PATH "sdmc:/switch/NXInputRelay/network-sysmodule.log"
+#define NETWORK_LOG_OLD_PATH "sdmc:/switch/NXInputRelay/network-sysmodule.log.1"
 #define NETWORK_LOG_MAX_BYTES (1024u*1024u)
 #define NETWORK_LINE_CAPACITY 512
 #define NETWORK_PAD_QUEUE_CAPACITY 128
@@ -672,6 +672,11 @@ static void accept_client(uint64_t now) {
     int client=accept(network.listen_fd,(struct sockaddr *)&address,&length);
     if(client<0) {
         int error_number=errno;
+        if(error_number==ECONNABORTED || error_number==ENETUNREACH || error_number==EHOSTUNREACH) {
+            network_event(now,"transient accept failure listen_fd=%d errno=%d bsd_result=0x%08lx; listener preserved",
+                network.listen_fd,error_number,(unsigned long)socketGetLastResult());
+            return;
+        }
         if(error_number!=EAGAIN && error_number!=EWOULDBLOCK && error_number!=EINTR) {
             network_event(now,"accept failed listen_fd=%d errno=%d bsd_result=0x%08lx",
                 network.listen_fd,error_number,(unsigned long)socketGetLastResult());
@@ -885,24 +890,26 @@ static bool ip_is_usable(bool valid,uint32_t ip) {
     return (host>>24)!=127u;
 }
 
-static bool current_gateway(uint32_t *out_gateway,Result *out_result) {
-    if(out_gateway) *out_gateway=0;
+static bool current_keepalive_target(uint32_t *out_target,Result *out_result) {
+    if(out_target) *out_target=0;
     Result rc=nifmInitialize(NifmServiceType_User);
     if(R_FAILED(rc)) { if(out_result) *out_result=rc;return false; }
     uint32_t address=0,mask=0,gateway=0,dns1=0,dns2=0;
     rc=nifmGetCurrentIpConfigInfo(&address,&mask,&gateway,&dns1,&dns2);
     nifmExit();
     if(out_result) *out_result=rc;
-    if(R_FAILED(rc) || !gateway) return false;
-    if(out_gateway) *out_gateway=gateway;
+    if(R_FAILED(rc)) return false;
+    uint32_t target=dns1?dns1:gateway;
+    if(!target) return false;
+    if(out_target) *out_target=target;
     return true;
 }
 
 static bool send_link_keepalive(uint64_t now) {
     if(!network.sockets_initialized) return true;
-    uint32_t gateway=0;Result rc=0;
-    if(!current_gateway(&gateway,&rc)) {
-        network_event(now,"LAN keepalive skipped: gateway unavailable rc=0x%08lx",(unsigned long)rc);
+    uint32_t target=0;Result rc=0;
+    if(!current_keepalive_target(&target,&rc)) {
+        network_event(now,"LAN keepalive skipped: DNS/gateway target unavailable rc=0x%08lx",(unsigned long)rc);
         return true;
     }
     int fd=socket(AF_INET,SOCK_DGRAM,0);
@@ -913,7 +920,7 @@ static bool send_link_keepalive(uint64_t now) {
     }
     static const char payload[]="NXInputRelay";
     struct sockaddr_in destination={0};
-    destination.sin_family=AF_INET;destination.sin_addr.s_addr=gateway;destination.sin_port=htons(9);
+    destination.sin_family=AF_INET;destination.sin_addr.s_addr=target;destination.sin_port=htons(9);
     ssize_t sent=sendto(fd,payload,sizeof(payload)-1,0,(struct sockaddr *)&destination,sizeof(destination));
     int send_error=sent==(ssize_t)(sizeof(payload)-1)?0:errno;
     close(fd);
@@ -951,8 +958,8 @@ static void network_health_tick(uint64_t now) {
     if(previous_set && (previous_usable!=link_usable || (link_usable && previous_ip!=ip))) {
         network.next_link_keepalive=now+NETWORK_LINK_KEEPALIVE_MS;
         network.link_keepalive_failures=0;
-        network_input_recover(now,link_usable?"IPv4 address restored or changed":"IPv4 link lost");
-        return;
+        network_event(now,"IPv4 observation changed (%s); preserving listener bound to INADDR_ANY",
+            link_usable?"usable":"temporarily unusable");
     }
 
     if(link_usable && now>=network.next_link_keepalive) {

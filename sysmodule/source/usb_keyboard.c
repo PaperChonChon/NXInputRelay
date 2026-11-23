@@ -147,7 +147,7 @@ bool keyboard_create_log_snapshot(uint64_t now_ms,KeyboardLogError *result) {
         if(result->failed) return false;
     }
     errno=0;
-    log_file=fopen("sdmc:/switch/RecurCIV/usb.log","a");
+    log_file=fopen("sdmc:/switch/NXInputRelay/usb.log","a");
     if(!log_file) { *result=(KeyboardLogError){true,errno,"fopen"};return false; }
     errno=0;
     int written=fprintf(log_file,
@@ -218,11 +218,11 @@ Result keyboard_init(void) {
     gamepad_neutral(&gamepad_desired_report);
     gamepad_last_report=gamepad_desired_report;
     errno=0;
-    log_file=fopen("sdmc:/switch/RecurCIV/usb.log","w");
+    log_file=fopen("sdmc:/switch/NXInputRelay/usb.log","w");
     if(!log_file) { int open_errno=errno;remember_log_error("fopen",open_errno); }
     if(gamepad_descriptor_was_valid)
         keyboard_log("Gamepad descriptor valid=0: keyboard_init reset");
-    keyboard_log("NXInputRelay sysmodule 1.3.4-touch | HOS %u.%u.%u | applet=%d",
+    keyboard_log("NXInputRelay sysmodule 1.3.5-touch | HOS %u.%u.%u | applet=%d",
         HOSVER_MAJOR(hosversionGet()),HOSVER_MINOR(hosversionGet()),HOSVER_MICRO(hosversionGet()),appletGetAppletType());
     Result rc=0;
     if (hosversionBefore(5,0,0)) return failed("Horizon OS 5.0.0 required",MAKERESULT(Module_Libnx,LibnxError_IncompatSysVer));

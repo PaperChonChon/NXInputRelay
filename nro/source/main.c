@@ -472,7 +472,7 @@ static void perform(Action action,uint64_t now) {
                     snprintf(manual_log_result,sizeof(manual_log_result),"Manual mkdir %s: errno=%d",path,error_number);
                 else if(!keyboard_create_log_snapshot(now,&result))
                     snprintf(manual_log_result,sizeof(manual_log_result),"Manual log %s: errno=%d",result.operation,result.error_number);
-                else snprintf(manual_log_result,sizeof(manual_log_result),"Log snapshot written: /switch/RecurCIV/usb.log");
+                else snprintf(manual_log_result,sizeof(manual_log_result),"Log snapshot written: /switch/NXInputRelay/usb.log");
             }
             break;
         default:

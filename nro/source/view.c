@@ -672,7 +672,7 @@ void view_render(const View *v,uint32_t *pixels,int stride) {
         snprintf(buffer,sizeof(buffer),"Last command: %s",n->last_command);ui_text(666,416,20,p.muted,buffer,520);
         snprintf(buffer,sizeof(buffer),"Queues: key %u  pad %u  touch %u",n->key_queue,n->pad_queue,n->touch_queue);ui_text(666,450,20,p.muted,buffer,520);
         snprintf(buffer,sizeof(buffer),"Session %llus    Activity %llus",(unsigned long long)(n->session_age_ms/1000),(unsigned long long)(n->activity_age_ms/1000));ui_text(666,484,20,p.muted,buffer,520);
-        ui_text(48,584,20,p.muted,"Log: sdmc:/switch/RecurCIV/network-nro.log",1184);
+        ui_text(48,584,20,p.muted,"Log: sdmc:/switch/NXInputRelay/network-nro.log",1184);
         return;
     } else if(v->screen==SCREEN_CONTROLLER_MENU) {
         ui_text(48,82,32,p.ink,"USB CONTROLLER",900);
@@ -848,7 +848,7 @@ void view_render(const View *v,uint32_t *pixels,int stride) {
     } else if(v->screen==SCREEN_DIAGNOSTICS) {
         ui_text(48,130,32,p.ink,"USB diagnostics",1180);
         for(int i=0;i<12;i++) ui_text(48,181+i*31,20,i==0&&v->error?p.negative:p.ink,v->diagnostics[i],1184);
-        ui_text(48,581,20,p.muted,"Log: sdmc:/switch/RecurCIV/usb.log",1184);
+        ui_text(48,581,20,p.muted,"Log: sdmc:/switch/NXInputRelay/usb.log",1184);
     } else {
         ui_text(48,150,32,p.negative,"Unknown screen - return Home",1100);
     }

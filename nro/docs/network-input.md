@@ -13,7 +13,7 @@ The listener remains available in the background while browsing idle menus.
 Opening a local live/sending/controller operation makes new remote
 authentication return `ERR busy`; menu browsing alone does not claim USB.
 
-NRO diagnostics are written to `sdmc:/switch/RecurCIV/network-nro.log`.
+NRO diagnostics are written to `sdmc:/switch/NXInputRelay/network-nro.log`.
 At approximately 1 MiB, the previous `.1` backup is deleted, the current log
 becomes `network-nro.log.1`, and a new current log is opened.
 
@@ -45,7 +45,7 @@ starts when execution resumes.
 ## Network diagnostics
 
 NXInputRelay appends timestamped network diagnostics to
-`sdmc:/switch/RecurCIV/network-nro.log`. The log records IP-address changes,
+`sdmc:/switch/NXInputRelay/network-nro.log`. The log records IP-address changes,
 listener generations and file descriptors, accepted clients, authentication
 failures/timeouts, send/receive/accept errors, recovery attempts, retry delays,
 and a health snapshot every 60 seconds. Listener descriptor and `SO_ERROR`
@@ -54,7 +54,7 @@ health are checked every five seconds; a failed check requests recovery.
 The log is flushed after every entry. At 1 MiB it rotates to
 `network-nro.log.1`,
 preserving one previous log. The broader USB log remains at
-`sdmc:/switch/RecurCIV/usb.log`, but that file is recreated whenever the USB
+`sdmc:/switch/NXInputRelay/usb.log`, but that file is recreated whenever the USB
 service is initialized, so copy it before restarting NXInputRelay when investigating
 an active failure.
 

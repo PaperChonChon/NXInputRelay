@@ -2,7 +2,7 @@
 
 **USB Controller, Keyboard, Macro Studio & Civilization VII Automation**
 
-**Current source version: 1.4.2**
+**Current source version: 1.4.3**
 
 NXInputRelay is a Nintendo Switch homebrew application based on RecurCIV,
 combining USB controller input, keyboard functionality, controller macro
@@ -218,7 +218,7 @@ NXInputRelay can record USB configuration, transfer, and error information.
 Diagnostic log:
 
 ```text
-sdmc:/switch/RecurCIV/usb.log
+sdmc:/switch/NXInputRelay/usb.log
 ```
 
 If a connection fails, try reconnecting the cable, resetting USB from diagnostics, and checking whether the receiving device recognizes the USB interface.

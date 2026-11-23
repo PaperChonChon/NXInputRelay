@@ -111,7 +111,7 @@ def main() -> None:
     # Windows MTP/ZIP copy paths that discard zero-byte files still transfer it.
     (PACKAGE / "flags/boot2.flag").write_text("boot2\n", encoding="ascii")
 
-    archive_base = ROOT / f"nxinputrelay_sysmodule_v1.3.4-touch_atmosphere_{TITLE_ID}"
+    archive_base = ROOT / f"nxinputrelay_sysmodule_v1.3.5-touch_atmosphere_{TITLE_ID}"
     archive = Path(shutil.make_archive(str(archive_base), "zip", ROOT, "atmosphere"))
 
     print(f"Built: {nsp}")

@@ -1,6 +1,20 @@
 # Changelog
 
-All notable RecurCIV releases will be documented here.
+All notable NXInputRelay releases will be documented here.
+
+## [1.4.3] — 2026-11-23
+
+### Fixed
+
+- Network and USB diagnostics now live under `/switch/NXInputRelay` instead of
+  the legacy RecurCIV directory.
+- Transient `accept()` routing errors no longer destroy and recreate a healthy
+  TCP listener.
+- Brief loopback results from `gethostid()` are now diagnostic observations;
+  the listener remains bound to `INADDR_ANY` and available when the real address
+  returns.
+- The access-point keepalive prefers the configured DNS host over an isolated
+  or intentionally unreachable gateway.
 
 ## [1.4.2] — 2026-11-23
 
