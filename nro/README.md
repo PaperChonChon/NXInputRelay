@@ -133,7 +133,7 @@ Successful exploit execution does not automatically complete any subsequent netw
 
 ## Installation
 
-1. Download an `NXInputRelay` release archive from this repository's Releases page.
+1. Download an `NXInputRelay` release archive from this repository's [Releases](https://github.com/PaperChonChon/NXInputRelay/releases) page.
 2. Extract it to the root of your Switch SD card.
 3. Confirm the application is located at:
 
