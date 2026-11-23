@@ -19,13 +19,13 @@ The script produces `nxinputrelay_sysmodule.nsp`, stages an installable tree at
 convenient SD-card installation.
 
 ## Install
-
-1. Keep your existing token at `/switch/RecurCIV/network-token.txt`. It must be
-   8-64 printable characters with no spaces.
-2. Copy this project's `atmosphere` folder to the root of the SD card and merge
+1. Download from the [Release](https://github.com/PaperChonChon/NXInputRelay/releases) page
+2. Extract and copy this project's `atmosphere` folder to the root of the SD card and merge
    it with the existing `atmosphere` folder.
-3. Fully reboot Atmosphere. The service starts at boot and listens on TCP 6002.
-4. Inspect `/switch/RecurCIV/network-sysmodule.log` and
+3. Create a token at `/switch/RecurCIV/network-token.txt`. It must be
+   8-64 printable characters with no spaces.
+4. Fully reboot Atmosphere. The service starts at boot and listens on TCP 6002.
+5. Inspect `/switch/RecurCIV/network-sysmodule.log` and
    `/switch/RecurCIV/usb.log` if it does not accept connections.
 
 The included `toolbox.json` exposes the service as `sys-NXInputRelay` in compatible
