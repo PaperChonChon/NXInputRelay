@@ -22,8 +22,10 @@ convenient SD-card installation.
 1. Download from the [Release](https://github.com/PaperChonChon/NXInputRelay/releases) page
 2. Extract and copy this project's `atmosphere` folder to the root of the SD card and merge
    it with the existing `atmosphere` folder.
-3. Create a token at `/switch/RecurCIV/network-token.txt`. It must be
-   8-64 printable characters with no spaces.
+3. Run `python .\nro\tools\nxinputrelay_net.py` from the repository without a
+   host. Approve token generation, then copy the generated
+   `nro\tools\network-token.txt` to `/switch/RecurCIV/network-token.txt` on the
+   SD card. Keep the local copy for the client.
 4. Fully reboot Atmosphere. The service starts at boot and listens on TCP 6002.
 5. Inspect `/switch/RecurCIV/network-sysmodule.log` and
    `/switch/RecurCIV/usb.log` if it does not accept connections.

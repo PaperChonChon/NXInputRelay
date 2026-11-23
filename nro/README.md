@@ -43,6 +43,10 @@ depends on host enumeration. It is disabled unless
 [Network input](docs/network-input.md) for setup, protocol, cleanup behavior,
 and the bundled Python client.
 
+Run `python .\tools\nxinputrelay_net.py` without a host on first use. If the
+local token file is missing, the client offers to generate it and prints the
+SD-card copy instructions without displaying the token itself.
+
 The home screen includes a dedicated **Network Control** landing page. It
 shows listener health plus the active and last target, opens automatically
 when a remote client authenticates, and makes exclusive remote ownership

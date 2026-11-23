@@ -5,12 +5,15 @@ from __future__ import annotations
 import argparse
 import math
 import re
+import secrets
 import socket
 import time
 from pathlib import Path
 
 
-DEFAULT_TOKEN_FILE = Path(__file__).resolve().parents[1] / "network-token.txt"
+DEFAULT_TOKEN_FILE = Path(__file__).resolve().with_name("network-token.txt")
+LEGACY_TOKEN_FILE = Path(__file__).resolve().parents[1] / "network-token.txt"
+SWITCH_TOKEN_PATH = "/switch/RecurCIV/network-token.txt"
 
 KEY_MAP = """NXInputRelay descriptive keyboard map (case-insensitive)
 
@@ -104,6 +107,79 @@ def print_key_map() -> None:
 
 def print_input_map() -> None:
     print(INPUT_MAP.rstrip())
+
+
+def validate_token(token: str, source: str) -> str:
+    if not 8 <= len(token) <= 64:
+        raise ValueError(f"{source}: token must be 8-64 characters")
+    if any(ord(character) < 33 or ord(character) > 126 for character in token):
+        raise ValueError(f"{source}: token must contain printable ASCII without whitespace")
+    return token
+
+
+def read_token_file(path: Path) -> str:
+    try:
+        lines = path.read_text(encoding="ascii").splitlines()
+    except (OSError, UnicodeError) as error:
+        raise ValueError(f"cannot read token file {path}: {error}") from error
+    if not lines:
+        raise ValueError(f"{path}: token file is empty")
+    return validate_token(lines[0], str(path))
+
+
+def generate_token_file(path: Path) -> str:
+    token = secrets.token_urlsafe(32)
+    validate_token(token, "generated token")
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("x", encoding="ascii", newline="\n") as token_file:
+            token_file.write(token + "\n")
+    except FileExistsError as error:
+        raise ValueError(f"refusing to overwrite existing token file: {path}") from error
+    except OSError as error:
+        raise ValueError(f"cannot create token file {path}: {error}") from error
+    return token
+
+
+def print_token_install_instructions(path: Path) -> None:
+    print(f"Created a unique NXInputRelay token file:\n  {path}")
+    print("\nCopy this file to the following location on the Switch SD card:")
+    print(f"  {SWITCH_TOKEN_PATH}")
+    print("\nKeep the local file beside nxinputrelay_net.py; the client will use it automatically.")
+    print("After copying it, fully restart the NXInputRelay NRO or sysmodule, then run this command again.")
+
+
+def resolve_token(token: str | None, token_file: Path | None) -> tuple[str, bool]:
+    if token is not None:
+        return validate_token(token, "--token"), False
+
+    if token_file is not None:
+        path = token_file.expanduser().resolve()
+    elif DEFAULT_TOKEN_FILE.is_file():
+        path = DEFAULT_TOKEN_FILE
+    elif LEGACY_TOKEN_FILE.is_file():
+        # Preserve compatibility with clients that stored the token one level
+        # above the tools directory before NXInputRelay added onboarding.
+        path = LEGACY_TOKEN_FILE
+    else:
+        path = DEFAULT_TOKEN_FILE
+
+    if path.is_file():
+        return read_token_file(path), False
+
+    print(f"NXInputRelay token file was not found:\n  {path}")
+    try:
+        answer = input("Generate a new unique token file now? [y/N]: ").strip().lower()
+    except EOFError:
+        answer = ""
+    if answer not in {"y", "yes"}:
+        raise ValueError(
+            "token generation declined; provide --token, --token-file, or run interactively to generate one"
+        )
+
+    generated = generate_token_file(path)
+    print_token_install_instructions(path)
+    return generated, True
 
 
 def receive_line(connection: socket.socket) -> str:
@@ -221,7 +297,12 @@ def main() -> int:
                         help="show the complete descriptive keyboard map without connecting")
     parser.add_argument("--list-inputs", action="store_true",
                         help="show touch, controller, target, and safety commands without connecting")
-    parser.add_argument("--token-file", type=Path, default=DEFAULT_TOKEN_FILE)
+    parser.add_argument(
+        "--token-file",
+        type=Path,
+        default=None,
+        help="token file override (default: network-token.txt beside this script)",
+    )
     parser.add_argument("--wait", type=float, default=0.5,
                         help="seconds to keep a one-shot session open after queuing")
     args = parser.parse_args()
@@ -232,8 +313,15 @@ def main() -> int:
     if args.list_inputs:
         print_input_map()
         return 0
+    try:
+        token, generated = resolve_token(args.token, args.token_file)
+    except ValueError as error:
+        parser.error(str(error))
+    if generated:
+        return 0
+
     if not args.host:
-        parser.error("host is required unless --list-keys or --list-inputs is used")
+        parser.error("host is required unless a token was generated or a list option is used")
 
     if args.macro and args.command:
         parser.error("a positional command cannot be combined with --macro")
@@ -241,10 +329,6 @@ def main() -> int:
         macro_steps = load_macro(args.macro) if args.macro else None
     except (OSError, UnicodeError, ValueError) as error:
         parser.error(str(error))
-
-    token = args.token
-    if token is None:
-        token = args.token_file.read_text(encoding="utf-8").splitlines()[0].strip()
 
     port = args.port if args.port is not None else (6001 if args.target == "sw1" else 6002)
     print(f"Connecting to {args.host}:{port} (target={args.target})...")

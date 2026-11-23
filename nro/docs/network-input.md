@@ -62,12 +62,15 @@ an active failure.
 
 1. Copy the rebuilt `NXInputRelay.nro` to
    `sdmc:/switch/NXInputRelay/NXInputRelay.nro`.
-2. Copy `network-token.txt` to
-   `sdmc:/switch/RecurCIV/network-token.txt`. Change its single line to a private
-   8-64 character value without whitespace on both the Switch and client.
-3. Connect Switch 1 to the same isolated LAN as the controlling computer and
+2. Run `python .\tools\nxinputrelay_net.py` without a host. If
+   `tools\network-token.txt` does not exist, approve the prompt to generate a
+   unique token. The token value is not printed.
+3. Copy the generated file to
+   `sdmc:/switch/RecurCIV/network-token.txt`. Keep the original beside
+   `nxinputrelay_net.py`; the client loads it automatically.
+4. Connect Switch 1 to the same isolated LAN as the controlling computer and
    start NXInputRelay. No Internet connection is used or required.
-4. Connect to Switch 1 on TCP port 6001 and send either `auth TOKEN switch2\n`
+5. Connect to Switch 1 on TCP port 6001 and send either `auth TOKEN switch2\n`
    or `auth TOKEN switch1\n` within ten seconds. `switch2` authentication
    succeeds only while NXInputRelay's USB keyboard and gamepad are ready. `switch1`
    initializes a temporary local virtual controller and keyboard and does not
