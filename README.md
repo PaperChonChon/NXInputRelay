@@ -23,21 +23,22 @@ command reference, run:
 python .\nro\tools\nxinputrelay_net.py --list-inputs
 ```
 
-Examples for using the sysmodule version. If you are using the NRO version, the port is 6001:
-To use macro script on Switch 2 via Switch 1. Switch 2 docked <- USB A cable to USB C <- Switch 1 device's USB C (not dock):
+**Examples for using the sysmodule version**:
+If you are using the NRO version, the port is 6001
+**To use macro script on Switch 2 via Switch 1. Switch 2 docked <- USB A cable to USB C <- Switch 1 device's USB C (not dock):**
 ```powershell
 python .\nro\tools\recurciv_net.py 192.168.137.1 --target sw2 --port 6002 --macro ".\examples\wired_connection_macro.txt"
 ```
-To use interactive mode on Switch 1:
+**To use interactive mode on Switch 1:**
 ```powershell
 python .\nro\tools\recurciv_net.py 192.168.137.1 --target sw1 --port 6002
 ```
-To use one command on Switch 1:
+**To use one command on Switch 1:**
 ```powershell
 python .\nro\tools\recurciv_net.py 192.168.137.1 --target sw1 --port 6002 click a
 ```
 
-To enable the sysmodule on Atmosphere, press L1 + D-pad Down + R3, go to Sysmodules, go to nxinputrelay and press Y to enable (it should show a Home icon). Restart to take effect. Note that this module consumes ~1.32MB ram, you cannot enable some other sysmodules together with this (like sys-botbase).
+**To enable the sysmodule on Atmosphere, press L1 + D-pad Down + R3, go to Sysmodules, go to nxinputrelay and press Y to enable (it should show a Home icon). Restart to take effect. Note that this module consumes ~1.32MB ram, you cannot enable some other sysmodules together with this (like sys-botbase).**
 
 ## Security
 
