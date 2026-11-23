@@ -26,8 +26,7 @@ python .\nro\tools\recurciv_net.py --list-inputs
 
 The network service is disabled until
 `sdmc:/switch/RecurCIV/network-token.txt` contains an 8–64 character printable
-token without spaces. Do not commit that file or reuse a GitHub access token
-as the network token. The protocol is intended for a trusted, isolated local
+token without spaces. The protocol is intended for a trusted, isolated local
 network; it does not provide transport encryption.
 
 Generated logs, credentials, compiled binaries, release archives, and local
