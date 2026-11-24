@@ -222,7 +222,7 @@ Result keyboard_init(void) {
     if(!log_file) { int open_errno=errno;remember_log_error("fopen",open_errno); }
     if(gamepad_descriptor_was_valid)
         keyboard_log("Gamepad descriptor valid=0: keyboard_init reset");
-    keyboard_log("NXInputRelay NRO 1.4.3-touch | HOS %u.%u.%u | applet=%d",
+    keyboard_log("NXInputRelay NRO 1.4.4-touch | HOS %u.%u.%u | applet=%d",
         HOSVER_MAJOR(hosversionGet()),HOSVER_MINOR(hosversionGet()),HOSVER_MICRO(hosversionGet()),appletGetAppletType());
     Result rc=0;
     if (hosversionBefore(5,0,0)) return failed("Horizon OS 5.0.0 required",MAKERESULT(Module_Libnx,LibnxError_IncompatSysVer));

@@ -4,7 +4,7 @@ import hashlib
 from pathlib import Path
 import subprocess
 
-VERSION='1.4.3'
+VERSION='1.4.4'
 root=Path(__file__).resolve().parent
 kit=Path(os.environ.get('PLUME_DEVKITPRO', 'C:/devkitPro' if os.name=='nt' else '/opt/devkitpro'))
 exe='.exe' if os.name=='nt' else ''

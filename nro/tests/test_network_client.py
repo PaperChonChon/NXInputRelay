@@ -44,10 +44,12 @@ for runtime_source in (
     assert '#define NETWORK_TOKEN_PATH "sdmc:/switch/NXInputRelay/network-token.txt"' in runtime_text
     assert '#define NETWORK_TOKEN_LEGACY_PATH "sdmc:/switch/RecurCIV/network-token.txt"' in runtime_text
     assert 'sdmc:/switch/NXInputRelay/network-' in runtime_text
-    assert 'transient accept failure' in runtime_text
-    assert 'listener preserved' in runtime_text
+    assert 'accept routing failure' in runtime_text
+    assert 'schedule_listener_retry(now,"accept routing",error_number);' in runtime_text
     assert 'uint32_t target=dns1?dns1:gateway;' in runtime_text
     assert 'network_input_recover(now,link_usable?' not in runtime_text
+    assert 'return network.link_usable?open_listener(0):false;' not in runtime_text
+    assert 'network.listen_fd<0 && network.link_usable' not in runtime_text
 
 with tempfile.TemporaryDirectory(prefix="nxinputrelay-token-") as directory:
     token_file = Path(directory) / "network-token.txt"

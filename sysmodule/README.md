@@ -15,7 +15,7 @@ python .\build.py
 
 The script produces `nxinputrelay_sysmodule.nsp`, stages an installable tree at
 `atmosphere\contents\4200000000006001\`, and creates
-`nxinputrelay_sysmodule_v1.3.5-touch_atmosphere_4200000000006001.zip` for
+`nxinputrelay_sysmodule_v1.3.6-touch_atmosphere_4200000000006001.zip` for
 convenient SD-card installation.
 
 ## Install

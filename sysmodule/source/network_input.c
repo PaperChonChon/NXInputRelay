@@ -673,8 +673,9 @@ static void accept_client(uint64_t now) {
     if(client<0) {
         int error_number=errno;
         if(error_number==ECONNABORTED || error_number==ENETUNREACH || error_number==EHOSTUNREACH) {
-            network_event(now,"transient accept failure listen_fd=%d errno=%d bsd_result=0x%08lx; listener preserved",
+            network_event(now,"accept routing failure listen_fd=%d errno=%d bsd_result=0x%08lx; recycling socket service",
                 network.listen_fd,error_number,(unsigned long)socketGetLastResult());
+            schedule_listener_retry(now,"accept routing",error_number);
             return;
         }
         if(error_number!=EAGAIN && error_number!=EWOULDBLOCK && error_number!=EINTR) {
@@ -1021,14 +1022,17 @@ bool network_input_init(void) {
     network.phase=NET_LISTENING;
     network.restart_due=0;
     network_health_tick(0);
-    return network.link_usable?open_listener(0):false;
+    /* The listener is bound to INADDR_ANY and remains useful while NIFM is
+       transitioning between loopback and the Wi-Fi address.  Do not gate
+       socket creation on gethostid(), which can remain stale for minutes. */
+    return open_listener(0);
 }
 
 void network_input_poll(uint64_t now,bool allow_session) {
     if(!network.enabled || network.phase==NET_DISABLED) return;
     network.clock_now=now;
     network_health_tick(now);
-    if(network.listen_fd<0 && network.link_usable && now>=network.restart_due) (void)open_listener(now);
+    if(network.listen_fd<0 && now>=network.restart_due) (void)open_listener(now);
     if(network.phase==NET_LISTENING && network.listen_fd>=0) {
         struct pollfd listener={.fd=network.listen_fd,.events=POLLIN};
         int ready=poll(&listener,1,0);

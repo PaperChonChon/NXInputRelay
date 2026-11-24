@@ -2,6 +2,16 @@
 
 All notable NXInputRelay releases will be documented here.
 
+## [1.4.4] — 2026-11-24
+
+### Fixed
+
+- Listener creation and recovery no longer wait for `gethostid()` to stop
+  reporting loopback. Because the listener binds `INADDR_ANY`, it now starts at
+  boot and retries even during a stale NIFM transition.
+- Persistent routing errors returned by `accept()` now recycle the socket
+  service after a bounded retry delay instead of generating a tight log loop.
+
 ## [1.4.3] — 2026-11-23
 
 ### Fixed
