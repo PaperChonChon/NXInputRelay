@@ -1,10 +1,10 @@
 # NXInputRelay
 
 NXInputRelay extends [RecurCIV](https://github.com/bbongpark/RecurCIV) and takes inspiration from [sys-botbase](https://github.com/olliz0r/sys-botbase/) with
-authenticated network input for Nintendo Switch homebrew. A client on the
+authenticated network input for Nintendo Switch homebrew. Using this, you can send controller, keyboard, on-screen inputs to Nintendo Switch 1 and 2 over the network. A client on the
 local network can send controller, keyboard, and experimental absolute-touch
-commands either to the console running NXInputRelay (`sw1`) or through its USB
-device connection to another console (`sw2`).
+commands either to the console, like Nintendo Switch 1, running NXInputRelay (`sw1`) or through its USB
+device connection to another console like Nintendo Switch 2 (`sw2`).
 
 The repository contains two implementations:
 
