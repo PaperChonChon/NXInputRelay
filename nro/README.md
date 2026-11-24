@@ -270,6 +270,17 @@ The build produces:
 build/NXInputRelay.nro
 ```
 
+To create a simple SD-card installation ZIP on Windows, run:
+
+```bat
+package-release.bat
+```
+
+The script reads the version from `build.py`, stages the NRO at
+`release/switch/NXInputRelay/NXInputRelay.nro`, and creates
+`NXInputRelay-v<version>.zip`. Extracting that archive at the SD-card root
+installs the application under `/switch/NXInputRelay/`.
+
 The build requires the included assets and `payload.txt`.
 
 Debug checkout paths are remapped so the same source and toolchain can produce
